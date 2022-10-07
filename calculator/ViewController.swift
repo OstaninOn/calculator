@@ -24,14 +24,20 @@ class ViewController: UIViewController {
             mathSign = false
         }
         else {
-            result.text = result.text! + String (sender.tag)
+            result.text = "\(result.text ?? "")\(sender.tag)"
         }
-        numberFromScreen = Int(result.text!)!
+        if let text = result.text,
+           let inputNumber = Int(text) {
+            numberFromScreen = inputNumber
+        }
     }
     
     @IBAction func buttonsSign(_ sender: UIButton) {
-        if result.text != "" && sender.tag != 10 && sender.tag != 15 {
-            firstNum = Int(result.text!)!
+        if !(result.text?.isEmpty ?? true) && sender.tag != 10 && sender.tag != 15 {
+            if let text = result.text,
+               let inputNumber = Int(text) {
+                firstNum = inputNumber
+            }
             
             if sender.tag == 11 { // деление
                 result.text = "÷"
@@ -63,7 +69,7 @@ class ViewController: UIViewController {
             }
         }
         else if sender.tag == 10 {
-            result.text = "0"
+            result.text = ""
             firstNum = 0
             numberFromScreen = 0
             opertion = 0
